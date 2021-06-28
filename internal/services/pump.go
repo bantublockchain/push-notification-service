@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"push-notification-service/internal/queue"
+	"github.com/bantublockchain/push-notification-service/internal/queue"
 )
 
 type Pump struct {

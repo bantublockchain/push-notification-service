@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"push-notification-service/internal/services"
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 // TelegramService ...

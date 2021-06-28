@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"push-notification-service/internal/services"
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 type telegramMessage struct {

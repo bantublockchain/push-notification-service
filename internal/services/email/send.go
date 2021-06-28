@@ -6,7 +6,7 @@ import (
 	"net/smtp"
 	"time"
 
-	"push-notification-service/internal/services"
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 func (ec EmailConfig) send(from string, to []string, body []byte, fc services.FeedbackCollector) error {

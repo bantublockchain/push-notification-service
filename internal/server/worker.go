@@ -3,8 +3,9 @@ package server
 import (
 	"context"
 	"log"
-	"push-notification-service/internal/queue"
-	"push-notification-service/internal/services"
+
+	"github.com/bantublockchain/push-notification-service/internal/queue"
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 type worker struct {

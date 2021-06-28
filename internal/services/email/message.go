@@ -3,7 +3,8 @@ package email
 import (
 	"encoding/json"
 	"errors"
-	"push-notification-service/internal/services"
+
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 type attachment struct {

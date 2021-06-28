@@ -3,9 +3,10 @@ package apns
 import (
 	"encoding/json"
 	"errors"
-	"github.com/sideshow/apns2"
-	"push-notification-service/internal/services"
 	"time"
+
+	"github.com/bantublockchain/push-notification-service/internal/services"
+	"github.com/sideshow/apns2"
 )
 
 type apnsMessage struct {

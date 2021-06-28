@@ -3,7 +3,7 @@ package email
 import (
 	"log"
 
-	"push-notification-service/internal/services"
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 const serviceID = "email"

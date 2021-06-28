@@ -2,12 +2,13 @@ package server
 
 import (
 	"context"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
-	"push-notification-service/internal/queue"
-	"push-notification-service/internal/services"
 	"sync"
+
+	"github.com/bantublockchain/push-notification-service/internal/queue"
+	"github.com/bantublockchain/push-notification-service/internal/services"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // Server ...

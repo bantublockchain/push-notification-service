@@ -1,4 +1,4 @@
-module push-notification-service
+module github.com/bantublockchain/push-notification-service
 
 go 1.16
 

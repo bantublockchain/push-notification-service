@@ -3,8 +3,9 @@ package memory
 import (
 	"context"
 	"errors"
-	"push-notification-service/internal/queue"
 	"sync"
+
+	"github.com/bantublockchain/push-notification-service/internal/queue"
 )
 
 // MemoryQueueFactory ...

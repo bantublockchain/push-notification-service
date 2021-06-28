@@ -218,7 +218,7 @@ over a raw payload. Here's an example:
 
     import (
     	"encoding/json"
-    	"push-notification-service/pkg/shove"
+    	"github.com/bantublockchain/push-notification-service/pkg/shove"
     	"log"
     	"os"
     )

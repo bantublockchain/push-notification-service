@@ -3,7 +3,8 @@ package fcm
 import (
 	"encoding/json"
 	"errors"
-	"push-notification-service/internal/services"
+
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 type fcmMessage struct {

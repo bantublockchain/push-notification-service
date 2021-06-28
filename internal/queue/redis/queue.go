@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
+	"github.com/bantublockchain/push-notification-service/internal/queue"
 	"github.com/gomodule/redigo/redis"
 	"gitlab.com/pennersr/redq"
-	"push-notification-service/internal/queue"
 )
 
 type redisQueueFactory struct {

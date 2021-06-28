@@ -2,11 +2,12 @@ package apns
 
 import (
 	"crypto/tls"
+	"log"
+	"time"
+
+	"github.com/bantublockchain/push-notification-service/internal/services"
 	"github.com/sideshow/apns2"
 	"github.com/sideshow/apns2/certificate"
-	"log"
-	"push-notification-service/internal/services"
-	"time"
 )
 
 // APNS ...

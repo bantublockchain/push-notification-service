@@ -10,17 +10,17 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/bantublockchain/push-notification-service/internal/queue"
+	"github.com/bantublockchain/push-notification-service/internal/queue/memory"
+	"github.com/bantublockchain/push-notification-service/internal/queue/redis"
+	"github.com/bantublockchain/push-notification-service/internal/server"
+	"github.com/bantublockchain/push-notification-service/internal/services"
+	"github.com/bantublockchain/push-notification-service/internal/services/apns"
+	"github.com/bantublockchain/push-notification-service/internal/services/email"
+	"github.com/bantublockchain/push-notification-service/internal/services/fcm"
+	"github.com/bantublockchain/push-notification-service/internal/services/telegram"
+	"github.com/bantublockchain/push-notification-service/internal/services/webpush"
 	"github.com/shopspring/decimal"
-	"push-notification-service/internal/queue"
-	"push-notification-service/internal/queue/memory"
-	"push-notification-service/internal/queue/redis"
-	"push-notification-service/internal/server"
-	"push-notification-service/internal/services"
-	"push-notification-service/internal/services/apns"
-	"push-notification-service/internal/services/email"
-	"push-notification-service/internal/services/fcm"
-	"push-notification-service/internal/services/telegram"
-	"push-notification-service/internal/services/webpush"
 )
 
 var apiAddr = flag.String("api-addr", ":8322", "API address to listen to")

@@ -1,9 +1,10 @@
 package shove
 
 import (
-	"github.com/gomodule/redigo/redis"
-	shvredis "push-notification-service/internal/queue/redis"
 	"time"
+
+	shvredis "github.com/bantublockchain/push-notification-service/internal/queue/redis"
+	"github.com/gomodule/redigo/redis"
 )
 
 // Client ...

@@ -2,13 +2,14 @@ package webpush
 
 import (
 	"context"
-	wpg "github.com/SherClockHolmes/webpush-go"
 	"log"
 	"math"
 	"net/http"
-	"push-notification-service/internal/queue"
-	"push-notification-service/internal/services"
 	"time"
+
+	wpg "github.com/SherClockHolmes/webpush-go"
+	"github.com/bantublockchain/push-notification-service/internal/queue"
+	"github.com/bantublockchain/push-notification-service/internal/services"
 )
 
 // WebPush ...
