@@ -17,13 +17,13 @@ type redisClient struct {
 }
 
 // NewRedisClient ...
-func NewRedisClient(redisURL string) Client {
+func NewRedisClient(url, pwd string) Client {
 	rc := &redisClient{
 		pool: &redis.Pool{
 			MaxIdle:     3,
 			IdleTimeout: 240 * time.Second,
 			Dial: func() (redis.Conn, error) {
-				return redis.DialURL(redisURL)
+				return redis.DialURL(url, redis.DialPassword(pwd))
 			},
 		},
 	}

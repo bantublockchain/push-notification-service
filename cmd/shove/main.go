@@ -65,7 +65,7 @@ func main() {
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 
 	var qf queue.QueueFactory
-	if os.Getenv("ENABLE_CACHING") == "1" && len(os.Getenv("REDIS_HOST")) > 0 && len(os.Getenv("REDIS_PORT")) > 0 && len(os.Getenv("REDIS_PASSWORD")) > 0 {
+	if len(os.Getenv("REDIS_HOST")) > 0 && len(os.Getenv("REDIS_PORT")) > 0 && len(os.Getenv("REDIS_PASSWORD")) > 0 {
 		log.Println("Using Redis queue at", fmt.Sprintf("redis://%v:%v", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")))
 		qf = redis.NewQueueFactory(fmt.Sprintf("redis://%v:%v", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")), os.Getenv("REDIS_PASSWORD"))
 	} else {
