@@ -176,14 +176,16 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 			log.Fatalf("error unmarshalling into firebase message: %v\n", err)
 		}
 		mid, err := m.Send(context.Background(), message)
-		duration := time.Since(startedAt)
-		defer func() {
-			fc.CountPush(fcm.ID(), success, duration)
-		}()
+
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
 			return services.PushStatusTempFail
 		}
+		duration := time.Since(startedAt)
+
+		defer func() {
+			fc.CountPush(fcm.ID(), success, duration)
+		}()
 		// fcm.log.Println("Pushed, took", duration, ", resp: ", mid)
 		log.Println("success: ", mid)
 
