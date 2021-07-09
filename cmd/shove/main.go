@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"encoding/base64"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
@@ -94,7 +96,35 @@ func main() {
 		}
 	}
 
-	if os.Getenv("FCM_API_KEY") != "" {
+	// if os.Getenv("FIREBASE_PROJECT_ID") == "" && os.Getenv("FCM_LEGACY") != "1" {
+
+	// 	log.Fatal("[ERROR] Setting up FCM service: No firebase project ID FIREBASE_PROJECT_ID env configured for NON LEGACY connection")
+	// }
+
+	if os.Getenv("GC") == "" && os.Getenv("FCM_LEGACY") != "1" {
+
+		log.Fatal("[ERROR] Setting up FCM service: No firebase CREDENTIALS env configured for NON LEGACY connection")
+	} else if len(os.Getenv("GC")) > 100 {
+		//create json file
+		//decode base 64 credential
+		uDec, e := base64.URLEncoding.DecodeString(os.Getenv("GC"))
+		if e == nil {
+
+			err := ioutil.WriteFile("/tmp/fcm.json", uDec, 0644)
+			if err != nil {
+				log.Fatal("[ERROR] creating fcm.json file:", err)
+			}
+			err = os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", "/tmp/fcm.json")
+			if err != nil {
+				log.Fatal("[ERROR] could not set GOOGLE_APPLICATION_CREDENTIALS ENV:", err)
+			}
+		} else {
+			log.Fatal("[ERROR] error decoding base 64 credential file:", e)
+
+		}
+
+	}
+	if os.Getenv("FCM_API_KEY") != "" || os.Getenv("FCM_LEGACY") != "1" {
 		fcm, err := fcm.NewFCM(os.Getenv("FCM_API_KEY"), newServiceLog("fcm"))
 		if err != nil {
 			log.Fatal("[ERROR] Setting up FCM service:", err)
