@@ -166,7 +166,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 		success = true
 	} else {
 		//use modern
-
+		log.Print("NON-LEGACY...")
 		m, err := fcm.firebaseApp.Messaging(context.Background())
 		if err != nil {
 			log.Fatalf("error initializing Messaging: %v\n", err)
@@ -177,7 +177,9 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 		}
 		mid, err := m.Send(context.Background(), message)
 		duration := time.Since(startedAt)
-
+		defer func() {
+			fc.CountPush(fcm.ID(), success, duration)
+		}()
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
 			return services.PushStatusTempFail

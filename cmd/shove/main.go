@@ -118,6 +118,7 @@ func main() {
 			if err != nil {
 				log.Fatal("[ERROR] could not set GOOGLE_APPLICATION_CREDENTIALS ENV:", err)
 			}
+			log.Println("using:/tmp/fcm.json for GOOGLE CREDENTIALS")
 		} else {
 			log.Fatal("[ERROR] error decoding base 64 credential file:", e)
 
