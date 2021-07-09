@@ -184,7 +184,8 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 			fcm.log.Println("[ERROR] send FCM:", err)
 			return services.PushStatusTempFail
 		}
-		fcm.log.Println("Pushed, took", duration, ", resp: ", mid)
+		// fcm.log.Println("Pushed, took", duration, ", resp: ", mid)
+		log.Println("success: ", mid)
 
 	}
 
