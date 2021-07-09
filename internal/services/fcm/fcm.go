@@ -187,7 +187,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 			fc.CountPush(fcm.ID(), success, duration)
 		}()
 		// fcm.log.Println("Pushed, took", duration, ", resp: ", mid)
-		log.Println("success: ", mid)
+		log.Println("Pushed, took", duration, ", resp: ", mid)
 
 	}
 
