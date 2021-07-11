@@ -181,20 +181,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
 			if strings.Contains(strings.ToLower(err.Error()), "sender") {
-				log.Println("[ERROR] sender error sending FCM:", err, ", initializing new firebase instance")
-				app, e := firebase.NewApp(context.Background(), nil)
-				if e != nil {
-					log.Fatalf("error initializing new firebase app: %v\n", err)
-				}
-				fcm.firebaseApp = app
-				m, err := fcm.firebaseApp.Messaging(context.Background())
-				if err != nil {
-					log.Fatalf("error initializing new Messaging: %v\n", err)
-				}
-				mid, err = m.Send(context.Background(), message)
-				if err != nil {
-					log.Fatalf("error sending new Message: %v\n", err)
-				}
+				log.Fatalln("[ERROR] sender error sending FCM:", err)
 
 			} else {
 				return services.PushStatusTempFail
