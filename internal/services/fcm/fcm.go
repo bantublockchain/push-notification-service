@@ -190,7 +190,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 
 				}
 				fcm.SenderErrorCount++
-				return services.PushStatusSuccess
+				return services.PushStatusTempFail
 
 			} else {
 				return services.PushStatusTempFail
