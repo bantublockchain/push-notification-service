@@ -185,7 +185,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 			fcm.log.Println("[ERROR] send FCM:", err)
 			if strings.Contains(strings.ToLower(err.Error()), "sender") {
 
-				if fcm.SenderErrorCount > 10 {
+				if fcm.SenderErrorCount > 9 {
 					log.Fatalln("[ERROR] sender error sending FCM:", err)
 
 				}
