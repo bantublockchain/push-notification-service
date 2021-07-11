@@ -44,9 +44,10 @@ var webPushVAPIDPrivateKey = flag.String("webpush-vapid-private-key", "", "VAPID
 var webPushWorkers = flag.Int("webpush-workers", 8, "The number of workers pushing Web messages")
 
 var telegramBotToken = flag.String("telegram-bot-token", "", "Telegram bot token")
-var telegramWorkers = flag.Int("telegram-workers", 2, "The number of workers pushing Telegram messages")
-var telegramRateAmount = flag.Int("telegram-rate-amount", 0, "Telegram max. rate (amount)")
-var telegramRatePer = flag.Int("telegram-rate-per", 0, "Telegram max. rate (per seconds)")
+
+// var telegramWorkers = flag.Int("telegram-workers", 2, "The number of workers pushing Telegram messages")
+// var telegramRateAmount = flag.Int("telegram-rate-amount", 0, "Telegram max. rate (amount)")
+// var telegramRatePer = flag.Int("telegram-rate-per", 0, "Telegram max. rate (per seconds)")
 
 var emailHost = flag.String("email-host", "", "Email host")
 var emailPort = flag.Int("email-port", 25, "Email port")
@@ -149,15 +150,30 @@ func main() {
 			log.Fatal("[ERROR] Adding WebPush service:", err)
 		}
 	}
+	tb := os.Getenv("TELEGRAM_BOT_TOKEN")
+	tw := 2
+	if d, e := decimal.NewFromString(os.Getenv("TELEGRAM_WORKERS")); e == nil {
+		tw = int(d.IntPart())
+	}
+	tra := 0
 
-	if *telegramBotToken != "" {
-		tg, err := telegram.NewTelegramService(*telegramBotToken, newServiceLog("telegram"))
+	if d, e := decimal.NewFromString(os.Getenv("TELEGRAM_RATE_AMOUNT")); e == nil {
+		tra = int(d.IntPart())
+	}
+	trp := 0
+
+	if d, e := decimal.NewFromString(os.Getenv("TELEGRAM_RATE_PER")); e == nil {
+		trp = int(d.IntPart())
+	}
+	if *telegramBotToken != "" || len(tb) > 0 {
+
+		tg, err := telegram.NewTelegramService(tb, newServiceLog("telegram"))
 		if err != nil {
 			log.Fatal("[ERROR] Setting up Telegram service:", err)
 		}
-		if err := s.AddService(tg, *telegramWorkers, services.SquashConfig{
-			RateMax: *telegramRateAmount,
-			RatePer: time.Second * time.Duration(*telegramRatePer),
+		if err := s.AddService(tg, tw, services.SquashConfig{
+			RateMax: tra,
+			RatePer: time.Second * time.Duration(trp),
 		}); err != nil {
 			log.Fatal("[ERROR] Adding Telegram service:", err)
 		}
