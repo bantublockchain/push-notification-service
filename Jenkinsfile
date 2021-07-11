@@ -11,7 +11,7 @@ pipeline {
 
     stage('Building image') {
         when {
-                expression { BRANCH_NAME ==~ /(alpha|beta|prod|loadtest)/ }
+                expression { BRANCH_NAME ==~ /(alpha|beta|prod|loadtest|wip)/ }
             }
       steps {
         script {
@@ -24,7 +24,7 @@ pipeline {
     stage('Deploy Image') {
 
          when {
-                expression { BRANCH_NAME ==~ /(alpha|beta|prod|loadtest)/ }
+                expression { BRANCH_NAME ==~ /(alpha|beta|prod|loadtest|wip)/ }
             }
             
       steps {
@@ -40,7 +40,7 @@ pipeline {
 
     stage('Remove Unused docker image') {
          when {
-                expression { BRANCH_NAME ==~ /(alpha|beta|prod|loadtest)/ }
+                expression { BRANCH_NAME ==~ /(alpha|beta|prod|loadtest|wip)/ }
             }
       steps {
          sh "docker rmi --force `docker images '$registry-$BRANCH_NAME' -a -q`"
