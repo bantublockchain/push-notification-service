@@ -87,6 +87,18 @@ pipeline {
       }
     }
 
+    stage('caprover-wip') {
+
+        when {
+                branch 'wip'
+            }
+
+      steps {
+        sh '''caprover deploy -h $CAPROVER_CREDENTIALS_USR -p $CAPROVER_CREDENTIALS_PSW -i $registry-$BRANCH_NAME -a pns-wip
+'''
+      }
+    }
+
   }
   
 }
