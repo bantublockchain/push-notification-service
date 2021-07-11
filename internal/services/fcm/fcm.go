@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	firebase "firebase.google.com/go"
@@ -179,6 +180,10 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
+			if strings.Contains(strings.ToLower(err.Error()), "sender") {
+				log.Fatalln("[ERROR] send FCM:", err)
+
+			}
 			return services.PushStatusTempFail
 		}
 		duration := time.Since(startedAt)
