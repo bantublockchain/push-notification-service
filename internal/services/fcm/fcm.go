@@ -101,7 +101,9 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 	var success bool
 	var req *http.Request
 	var err error
-
+	if len(msg.rawData) < 200 {
+		return services.PushStatusSuccess
+	}
 	if os.Getenv("FCM_LEGACY") == "1" {
 
 		req, err = http.NewRequest("POST", "https://fcm.googleapis.com/fcm/send", bytes.NewBuffer(msg.rawData))
@@ -182,11 +184,12 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
 			if strings.Contains(strings.ToLower(err.Error()), "sender") {
-				fcm.SenderErrorCount++
-				if fcm.SenderErrorCount > 10 {
+
+				if fcm.SenderErrorCount >= 1 {
 					log.Fatalln("[ERROR] sender error sending FCM:", err)
 
 				}
+				fcm.SenderErrorCount++
 				return services.PushStatusSuccess
 
 			} else {

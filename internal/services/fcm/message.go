@@ -20,6 +20,9 @@ func (fcmMessage) GetSquashKey() string {
 }
 
 func (fcm *FCM) ConvertMessage(data []byte) (smsg services.ServiceMessage, err error) {
+	if len(data) < 100 {
+		return nil, errors.New("message to convert has no content")
+	}
 	var msg fcmMessage
 	if err := json.Unmarshal(data, &msg); err != nil {
 		return nil, err
