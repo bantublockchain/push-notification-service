@@ -17,9 +17,10 @@ import (
 
 // FCM ...
 type FCM struct {
-	apiKey      string
-	log         *log.Logger
-	firebaseApp *firebase.App
+	apiKey           string
+	log              *log.Logger
+	firebaseApp      *firebase.App
+	SenderErrorCount uint
 }
 
 // NewFCM ...
@@ -181,7 +182,12 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
 			if strings.Contains(strings.ToLower(err.Error()), "sender") {
-				log.Fatalln("[ERROR] sender error sending FCM:", err)
+				fcm.SenderErrorCount++
+				if fcm.SenderErrorCount > 10 {
+					log.Fatalln("[ERROR] sender error sending FCM:", err)
+
+				}
+				return services.PushStatusSuccess
 
 			} else {
 				return services.PushStatusTempFail
