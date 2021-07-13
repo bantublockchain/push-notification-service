@@ -17,26 +17,26 @@ import (
 
 // FCM ...
 type FCM struct {
-	apiKey           string
-	log              *log.Logger
-	firebaseApp      *firebase.App
+	apiKey string
+	log    *log.Logger
+	// firebaseApp      *firebase.App
 	SenderErrorCount uint
 }
 
 // NewFCM ...
 func NewFCM(apiKey string, log *log.Logger) (fcm *FCM, err error) {
-	var app *firebase.App
-	if os.Getenv("FCM_LEGACY") != "1" {
-		app, err = firebase.NewApp(context.Background(), nil)
-		if err != nil {
-			log.Fatalf("error initializing FCM app: %v\n", err)
-		}
-	}
+	// var app *firebase.App
+	// if os.Getenv("FCM_LEGACY") != "1" {
+	// 	app, err = firebase.NewApp(context.Background(), nil)
+	// 	if err != nil {
+	// 		log.Fatalf("error initializing FCM app: %v\n", err)
+	// 	}
+	// }
 
 	fcm = &FCM{
-		apiKey:      apiKey,
-		log:         log,
-		firebaseApp: app,
+		apiKey: apiKey,
+		log:    log,
+		// firebaseApp: app,
 	}
 	return
 }
@@ -171,7 +171,14 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 	} else {
 		//use modern
 		log.Print("NON-LEGACY...")
-		m, err := fcm.firebaseApp.Messaging(context.Background())
+		var app *firebase.App
+		if os.Getenv("FCM_LEGACY") != "1" {
+			app, err = firebase.NewApp(context.Background(), nil)
+			if err != nil {
+				log.Fatalf("error initializing firebase app: %v\n", err)
+			}
+		}
+		m, err := app.Messaging(context.Background())
 		if err != nil {
 			log.Fatalf("error initializing Messaging: %v\n", err)
 		}
@@ -185,7 +192,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 			fcm.log.Println("[ERROR] send FCM:", err)
 			if strings.Contains(strings.ToLower(err.Error()), "sender") {
 
-				if fcm.SenderErrorCount > 9 {
+				if fcm.SenderErrorCount > 5 {
 					log.Fatalln("[ERROR] sender error sending FCM:", err)
 
 				}
