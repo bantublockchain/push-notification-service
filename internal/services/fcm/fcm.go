@@ -190,7 +190,7 @@ func (fcm *FCM) PushMessage(pclient services.PumpClient, smsg services.ServiceMe
 
 		if err != nil {
 			fcm.log.Println("[ERROR] send FCM:", err)
-			if strings.Contains(strings.ToLower(err.Error()), "sender") {
+			if strings.Contains(strings.ToLower(err.Error()), "sender") || strings.Contains(strings.ToLower(err.Error()), "registration-token-not-registered") {
 
 				if fcm.SenderErrorCount > 5 {
 					log.Fatalln("[ERROR] sender error sending FCM:", err)
